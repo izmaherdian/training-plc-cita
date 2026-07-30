@@ -21,10 +21,10 @@ Modul latihan ini mencakup berbagai konsep kontrol otomatisasi industri, meliput
 
 ---
 
-## 🛠️ Format File `.rungs` & Cara Penggunaan
+## 🛠️ Format File `.rungs` & Cara Penggunaan via [Rungs Studio](https://studio.rungs.dev/)
 
 ### Format File
-Setiap file `.rungs` disusun menggunakan format struktural YAML berbasis spesifikasi AOI Studio:
+Setiap file `.rungs` disusun menggunakan format struktural YAML spesifikasi **Rungs Studio** (`version: 4`, `origin: studio`):
 
 ```yaml
 version: 4
@@ -43,15 +43,17 @@ aoi:
         XIC(INPUT_TAG)OTE(OUTPUT_TAG);
 ```
 
-### Cara Menggunakan File `.rungs`
-1. **Buka Software PLC / Simulator Studio** yang mendukung impor rutin Ladder Diagram (`ld`) atau format AOI `.rungs`.
-2. **Impor / Load Routine**:
-   - Salin teks instruksi pada blok `content:` di bagian `Logic` ke dalam editor Ladder Diagram.
-   - Atau impor file `.rungs` ke dalam *Project Tree* / *Add-On Instructions*.
-3. **Konfigurasi Tag & Variabel**:
-   - Daftarkan variabel `input`, `output`, dan `local` sesuai tipe data (`BOOL`, `REAL`, `TIMER`, `COUNTER`, `DINT`) dan *default value* yang ditentukan.
-4. **Simulasi & Pengujian**:
-   - Jalankan mode simulasi (Online/Emulate) dan picu sinyal input untuk memverifikasi logika output.
+### Cara Menggunakan & Membuka File di Rungs Studio (Web PLC Simulator)
+1. **Akses Platform**: Buka browser dan kunjungi **[https://studio.rungs.dev/](https://studio.rungs.dev/)**.
+2. **Buka / Impor File `.rungs`**:
+   - Klik tombol **Open File** / **Import** pada antarmuka Rungs Studio.
+   - Atau cukup *drag & drop* (seret dan lepas) file `.rungs` (misalnya `Latihan_1c_Hari_3.rungs`) dari komputer ke halaman web Rungs Studio.
+3. **Visualisasi Ladder Diagram**:
+   - Rungs Studio secara otomatis memparsing file YAML dan memvisualisasikan diagram rungs Ladder lengkap beserta instruksi digital (`XIC`, `XIO`, `OTE`), timer (`TON`, `RTO`), counter (`CTU`, `CTD`), dan fungsi matematika (`MUL`, `DIV`, `ADD`, `SQRT`).
+   - Variabel `input`, `output`, dan `local` akan terkonfigurasi secara otomatis sesuai definisi pada file.
+4. **Simulasi Interaktif**:
+   - Jalankan mode simulasi pada Rungs Studio.
+   - Klik/toggle sakelar input (seperti `BUTTON`, `START_BUTTON`, `V_IN`, `SENSOR_MASUK`) untuk menguji alur daya listrik (*power flow*) dan verifikasi status output secara real-time.
 
 ---
 
