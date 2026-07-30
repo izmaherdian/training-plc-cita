@@ -11,7 +11,7 @@ The training modules cover fundamental to advanced industrial automation and pro
 2. **Arithmetic & Mathematical Operations**: Scaling calculations (`MUL`, `DIV`), offset addition (`ADD`), and Pythagorean theorem computation (`SQRT`).
 3. **Timer Instructions**: *Timer ON Delay* (`TON`), *Retentive Timer* (`RTO`), status bits (`.DN`), and Reset instructions (`RES`).
 4. **Counter Instructions**: *Counter Up* (`CTU`), *Counter Down* (`CTD`), and accumulated value comparison (`ACC`).
-5. **Analog Signal Scaling & Alarm Conditioning**: ADC raw data acquisition (0–32767 RAW) converted to physical units ($^\circ\text{C}$, bar, Volts) and multi-level alarm indicators (LL, L, H, HH).
+5. **Analog Signal Scaling & Alarm Conditioning**: ADC raw data acquisition (0–32767 RAW) converted to physical units (°C, bar, Volts) and multi-level alarm indicators (LL, L, H, HH).
 6. **Industrial Case Studies**:
    - Automated Parking Capacity Management System
    - Automatic 3-Phase Induction Motor Star-Delta Starter with Electrical Interlock
@@ -113,7 +113,7 @@ aoi:
   ```ld
   MUL(CELCIUS,GAIN,REAMUR);
   ```
-* **Working Principle**: Calculates the Reamur temperature by multiplying `CELCIUS` with the scale factor `GAIN` (0.8): $\text{REAMUR} = \text{CELCIUS} \times 0.8$. An input of 10 $\text{}^\circ\text{C}$ produces 8 $\text{}^\circ\text{R}$.
+* **Working Principle**: Calculates the Reamur temperature by multiplying `CELCIUS` with the scale factor `GAIN` (0.8): `REAMUR = CELCIUS * 0.8`. An input of 10 °C produces 8 °R.
 
 ---
 
@@ -129,7 +129,7 @@ aoi:
   GE(V_OUT,LIMIT_4)LT(V_OUT,LIMIT_6)OTE(LAMPU_2);
   GE(V_OUT,LIMIT_5)LT(V_OUT,LIMIT_6)OTE(LAMPU_3);
   ```
-* **Working Principle**: Computes scaled voltage $V_{OUT} = (V_{IN} + 0.1) \times 0.65$. `LAMPU_1` turns ON if $2.0 \le V_{OUT} < 6.0$; `LAMPU_2` turns ON if $4.0 \le V_{OUT} < 6.0$; `LAMPU_3` turns ON if $5.0 \le V_{OUT} < 6.0$. If $V_{OUT} \ge 6.0$, all lamps turn OFF.
+* **Working Principle**: Computes scaled voltage `V_OUT = (V_IN + 0.1) * 0.65`. `LAMPU_1` turns ON if 2.0 <= V_OUT < 6.0; `LAMPU_2` turns ON if 4.0 <= V_OUT < 6.0; `LAMPU_3` turns ON if 5.0 <= V_OUT < 6.0. If V_OUT >= 6.0, all lamps turn OFF.
 
 ---
 
@@ -188,7 +188,7 @@ aoi:
   ```ld
   MUL(A,A,AA)MUL(B,B,BB)ADD(AA,BB,C)SQRT(C,HASIL);
   ```
-* **Working Principle**: Computes $\text{HASIL} = \sqrt{A^2 + B^2}$. Given defaults $A=3$ and $B=4$, it calculates $AA=9$, $BB=16$, $C=25$, resulting in $\text{HASIL}=5.0$.
+* **Working Principle**: Computes `HASIL = sqrt(A^2 + B^2)`. Given defaults A=3 and B=4, it calculates AA=9, BB=16, C=25, resulting in HASIL=5.0.
 
 ---
 
@@ -205,7 +205,7 @@ aoi:
   XIC(TIMER_1.DN)TON(TIMER_2,5000,0);
   XIC(TIMER_1.DN)XIO(TIMER_2.DN)OTE(VALVE_C);
   ```
-* **Working Principle**: If $DP_A < 5\text{V}$, `VALVE_A` opens. If $DP_A \ge 5\text{V}$ and $DP_B < 5\text{V}$, `VALVE_B` opens. When both $DP \ge 5\text{V}$, `TIMER_1` runs for 5 seconds, after which `VALVE_C` opens for 5 seconds (`TIMER_2`), followed by an automatic system shutdown.
+* **Working Principle**: If DP_A < 5V, `VALVE_A` opens. If DP_A >= 5V and DP_B < 5V, `VALVE_B` opens. When both DP >= 5V, `TIMER_1` runs for 5 seconds, after which `VALVE_C` opens for 5 seconds (`TIMER_2`), followed by an automatic system shutdown.
 
 ---
 
@@ -237,9 +237,9 @@ aoi:
   XIC(SENS_1)XIC(SENS_2)XIC(SENS_3)OTE(SPRINKLER);
   ```
 * **Working Principle**:
-  - Level 1 (`SENS_1`) $\rightarrow$ Activates `SIRINE`.
-  - Level 2 (`SENS_1` AND `SENS_2`) $\rightarrow$ Activates `SIRINE` & `LAMPU`.
-  - Level 3 (All 3 sensors active simultaneously) $\rightarrow$ Activates `SIRINE`, `LAMPU`, & fire `SPRINKLER`.
+  - Level 1 (`SENS_1`) -> Activates `SIRINE`.
+  - Level 2 (`SENS_1` AND `SENS_2`) -> Activates `SIRINE` & `LAMPU`.
+  - Level 3 (All 3 sensors active simultaneously) -> Activates `SIRINE`, `LAMPU`, & fire `SPRINKLER`.
 
 ---
 
@@ -267,7 +267,7 @@ aoi:
   ```ld
   MUL(RAW_VAL,MAX_BAR,TEMP)DIV(TEMP,MAX_RAW,TEKANAN);
   ```
-* **Working Principle**: Converts raw ADC count into engineering bar units: $\text{TEKANAN} = (\text{RAW\_VAL} \times \text{MAX\_BAR}) / \text{MAX\_RAW}$. For `RAW_VAL` = 16383.5, it calculates `TEKANAN` = 12.5 bar.
+* **Working Principle**: Converts raw ADC count into engineering bar units: `TEKANAN = (RAW_VAL * MAX_BAR) / MAX_RAW`. For `RAW_VAL` = 16383.5, it calculates `TEKANAN` = 12.5 bar.
 
 ---
 
@@ -283,7 +283,7 @@ aoi:
   GE(V_IN,LIMIT_3)LT(V_IN,LIMIT_7)OTE(LAMPU_3);
   GE(V_IN,LIMIT_2)LT(V_IN,LIMIT_7)OTE(LAMPU_4);
   ```
-* **Working Principle**: `LAMPU_4` energizes when $V_{IN} \ge 2\text{V}$, `LAMPU_3` when $V_{IN} \ge 3\text{V}$, `LAMPU_2` when $V_{IN} \ge 5\text{V}$, and `LAMPU_1` when $V_{IN} \ge 6\text{V}$. All alarms turn OFF if $V_{IN} \ge 7\text{V}$.
+* **Working Principle**: `LAMPU_4` energizes when V_IN >= 2V, `LAMPU_3` when V_IN >= 3V, `LAMPU_2` when V_IN >= 5V, and `LAMPU_1` when V_IN >= 6V. All alarms turn OFF if V_IN >= 7V.
 
 ---
 
@@ -305,7 +305,7 @@ aoi:
   XIC(TIMER_2.DN)XIO(TIMER_3.DN)OTE(MOTOR_MIXER);
   XIC(TIMER_3.DN)XIO(TIMER_4.DN)OTE(POMPA_3);
   ```
-* **Working Principle**: Stage 1: `POMPA_1` fills fluid for 5s $\rightarrow$ Stage 2: `POMPA_2` fills additive for 5s $\rightarrow$ Stage 3: `MOTOR_MIXER` agitates for 7s $\rightarrow$ Stage 4: `POMPA_3` drains tank for 10s. When `TIMER_4.DN` turns ON, the batch cycle automatically resets and loops from Stage 1 until `STOP_BUTTON` is pressed.
+* **Working Principle**: Stage 1: `POMPA_1` fills fluid for 5s -> Stage 2: `POMPA_2` fills additive for 5s -> Stage 3: `MOTOR_MIXER` agitates for 7s -> Stage 4: `POMPA_3` drains tank for 10s. When `TIMER_4.DN` turns ON, the batch cycle automatically resets and loops from Stage 1 until `STOP_BUTTON` is pressed.
 
 ---
 
@@ -325,7 +325,7 @@ aoi:
 ---
 
 ### 18. `Latihan_4a_Hari_3.rungs`
-* **Description**: Normally-ON operation limit system (de-energizes when count $> 5$).
+* **Description**: Normally-ON operation limit system (de-energizes when count > 5).
 * **Tags**:
   * **Input**: `START_PUSH_BUTTON`, `STOP_PUSH_BUTTON` (`BOOL`)
   * **Output**: `START_LAMP` (`BOOL`)
@@ -350,7 +350,7 @@ aoi:
   ADD(DATA_1,ADD_VAL,HASIL);
   GT(HASIL,LIMIT_VAL)OTE(LAMPU);
   ```
-* **Working Principle**: Adds offset $+3000$ to `DATA_1`. If `HASIL` $> 5000$ ($2500+3000=5500$), `LAMPU` energizes.
+* **Working Principle**: Adds offset +3000 to `DATA_1`. If `HASIL` > 5000 (2500 + 3000 = 5500), `LAMPU` energizes.
 
 ---
 
@@ -397,7 +397,7 @@ aoi:
   GE(TEMPERATUR,LIMIT_60)OTE(SIRENE);
   GE(TEMPERATUR,LIMIT_45)OTE(LAMPU_PERINGATAN);
   ```
-* **Working Principle**: Scales raw ADC input to 0–100 $\text{}^\circ\text{C}$. `BOILER` heater energizes only when temperature $< 80\text{}^\circ\text{C}$ (shuts OFF at $\ge 80\text{}^\circ\text{C}$). `LAMPU_PERINGATAN` activates when temperature $\ge 45\text{}^\circ\text{C}$. Alarm `SIRENE` activates when temperature $\ge 60\text{}^\circ\text{C}$.
+* **Working Principle**: Scales raw ADC input to 0–100 °C. `BOILER` heater energizes only when temperature < 80 °C (shuts OFF at >= 80 °C). `LAMPU_PERINGATAN` activates when temperature >= 45 °C. Alarm `SIRENE` activates when temperature >= 60 °C.
 
 ---
 
@@ -411,7 +411,7 @@ aoi:
   XIC(SENS_1)XIO(SENS_2)OTE(PALANG)OTE(LAMPU_HIJAU);
   XIC(SENS_2)OTE(LAMPU_MERAH);
   ```
-* **Working Principle**: `SENS_1` detects approaching vehicle $\rightarrow$ opens `PALANG` gate and illuminates `LAMPU_HIJAU` (provided obstacle sensor `SENS_2` is clear). If obstacle sensor `SENS_2` is active $\rightarrow$ gate remains closed and `LAMPU_MERAH` illuminates.
+* **Working Principle**: `SENS_1` detects approaching vehicle -> opens `PALANG` gate and illuminates `LAMPU_HIJAU` (provided obstacle sensor `SENS_2` is clear). If obstacle sensor `SENS_2` is active -> gate remains closed and `LAMPU_MERAH` illuminates.
 
 ---
 
