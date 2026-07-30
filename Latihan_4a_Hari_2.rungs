@@ -1,0 +1,27 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_4a_Hari_2
+  description: "Sistem kontrol logika voting sensor keselamatan (Voting Safety Logic): LAMPU menyala jika minimal 1 sensor aktif (OR). SIRINE menyala jika minimal 2 sensor aktif bersamaan (Voting 2-out-of-3 / 2o3). SPRINKLER hanya menyala jika ketiga sensor (SENS_1, SENS_2, SENS_3) aktif secara bersamaan (AND / 3o3)."
+  tags:
+    input:
+      - name: SENS_1
+        dataType: BOOL
+      - name: SENS_2
+        dataType: BOOL
+      - name: SENS_3
+        dataType: BOOL
+    output:
+      - name: LAMPU
+        dataType: BOOL
+      - name: SIRINE
+        dataType: BOOL
+      - name: SPRINKLER
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        [XIC(SENS_1),[XIC(SENS_2),XIC(SENS_3)]]OTE(LAMPU);
+        [XIC(SENS_1)XIC(SENS_2),[XIC(SENS_2)XIC(SENS_3),XIC(SENS_1)XIC(SENS_3)]]OTE(SIRINE);
+        XIC(SENS_1)XIC(SENS_2)XIC(SENS_3)OTE(SPRINKLER);

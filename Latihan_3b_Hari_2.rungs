@@ -1,0 +1,24 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_3b_Hari_2
+  description: "Sistem simulasi penskalaan linier (scaling) sensor Pressure Transmitter: Mengonversi nilai mentah ADC (RAW_VAL 0 - 32767) menjadi satuan fisik bar (0 - 25 bar) menggunakan rumus TEKANAN = (RAW_VAL * MAX_BAR) / MAX_RAW. Pada nilai RAW_VAL = 16383.5, dihasilkan nilai TEKANAN sebesar 12.5 bar."
+  tags:
+    local:
+      - name: RAW_VAL
+        dataType: REAL
+        defaultValue: 16383.5
+      - name: MAX_BAR
+        dataType: REAL
+        defaultValue: 25
+      - name: MAX_RAW
+        dataType: REAL
+        defaultValue: 32767
+      - name: TEMP
+        dataType: REAL
+      - name: TEKANAN
+        dataType: REAL
+  routines:
+    Logic:
+      type: ld
+      content: MUL(RAW_VAL,MAX_BAR,TEMP)DIV(TEMP,MAX_RAW,TEKANAN);

@@ -1,0 +1,26 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_4a_Hari_3
+  description: "Sistem pembatas operasi mesin/lampu (Normally-ON dengan batas maksimum hitungan): START_LAMP bernilai menyala secara standar. Setiap penekanan START_PUSH_BUTTON menambah hitungan COUNTER_1. Jika tombol ditekan lebih dari 5 kali (mencapai preset 6), bit COUNTER_1.DN aktif sehingga XIO memutus dan memadamkan START_LAMP. Penekanan STOP_PUSH_BUTTON mereset hitungan (RES) untuk menyalakan kembali START_LAMP."
+  tags:
+    input:
+      - name: START_PUSH_BUTTON
+        dataType: BOOL
+      - name: STOP_PUSH_BUTTON
+        dataType: BOOL
+    output:
+      - name: START_LAMP
+        dataType: BOOL
+    local:
+      - name: COUNTER_1
+        dataType: COUNTER
+        defaultValue:
+          PRE: 6
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(START_PUSH_BUTTON)CTU(COUNTER_1,6,0);
+        XIO(COUNTER_1.DN)OTE(START_LAMP);
+        XIC(STOP_PUSH_BUTTON)RES(COUNTER_1);

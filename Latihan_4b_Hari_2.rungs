@@ -1,0 +1,27 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_4b_Hari_2
+  description: "Sistem pengolahan data analog dengan penjumlahan offset dan komparasi nilai ambang batas (Threshold Alarm): Mengalokasikan nilai sensor DATA_1, menambahkan konstanta offset ADD_VAL (+3000) ke variabel HASIL, kemudian membandingkan HASIL dengan LIMIT_VAL (5000). Jika HASIL > 5000 (misalnya 2500+3000 = 5500), maka LAMPU diaktifkan."
+  tags:
+    local:
+      - name: DATA_1
+        dataType: REAL
+        defaultValue: 2500
+      - name: ADD_VAL
+        dataType: REAL
+        defaultValue: 3000
+      - name: HASIL
+        dataType: REAL
+      - name: LIMIT_VAL
+        dataType: REAL
+        defaultValue: 5000
+    output:
+      - name: LAMPU
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        ADD(DATA_1,ADD_VAL,HASIL);
+        GT(HASIL,LIMIT_VAL)OTE(LAMPU);

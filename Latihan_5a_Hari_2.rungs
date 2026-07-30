@@ -1,0 +1,27 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_5a_Hari_2
+  description: "Sistem alarm dan proteksi kebakaran dengan kombinasi sensor spesifik: LAMPU menyala jika (SENS_1 AND SENS_2) aktif OR jika SENS_3 aktif. SIRINE menyala jika SENS_3 aktif. SPRINKLER mengucurkan air jika SENS_3 aktif DAN minimal salah satu dari SENS_1 atau SENS_2 juga aktif."
+  tags:
+    input:
+      - name: SENS_1
+        dataType: BOOL
+      - name: SENS_2
+        dataType: BOOL
+      - name: SENS_3
+        dataType: BOOL
+    output:
+      - name: LAMPU
+        dataType: BOOL
+      - name: SIRINE
+        dataType: BOOL
+      - name: SPRINKLER
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(SENS_1)XIC(SENS_2)OTE(LAMPU);
+        XIC(SENS_3)OTE(LAMPU)OTE(SIRINE);
+        XIC(SENS_3)[XIC(SENS_2),XIC(SENS_1)]OTE(SPRINKLER);

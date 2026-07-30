@@ -1,0 +1,44 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_5b_Hari_2
+  description: "Sistem pengondisian dan pengawasan suhu Boiler berbasis nilai analog: Penskalaan nilai mentah ADC (0-32767) ke temperatur 0-100 degC. BOILER aktif hanya jika TEMPERATUR < 80 degC (pemanas mati di atas 80 degC). LAMPU_PERINGATAN aktif saat TEMPERATUR >= 45 degC. SIRENE alarm aktif jika TEMPERATUR menyentuh atau melebihi 60 degC."
+  tags:
+    local:
+      - name: RAW_VAL
+        dataType: REAL
+        defaultValue: 21298.55
+      - name: MAX_TEMP
+        dataType: REAL
+        defaultValue: 100
+      - name: MAX_RAW
+        dataType: REAL
+        defaultValue: 32767
+      - name: TEMP_CALC
+        dataType: REAL
+      - name: TEMPERATUR
+        dataType: REAL
+      - name: LIMIT_80
+        dataType: REAL
+        defaultValue: 80
+      - name: LIMIT_60
+        dataType: REAL
+        defaultValue: 60
+      - name: LIMIT_45
+        dataType: REAL
+        defaultValue: 45
+    output:
+      - name: BOILER
+        dataType: BOOL
+      - name: SIRENE
+        dataType: BOOL
+      - name: LAMPU_PERINGATAN
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        MUL(RAW_VAL,MAX_TEMP,TEMP_CALC)DIV(TEMP_CALC,MAX_RAW,TEMPERATUR);
+        LT(TEMPERATUR,LIMIT_80)OTE(BOILER);
+        GE(TEMPERATUR,LIMIT_60)OTE(SIRENE);
+        GE(TEMPERATUR,LIMIT_45)OTE(LAMPU_PERINGATAN);

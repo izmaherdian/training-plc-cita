@@ -1,0 +1,23 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_1a_Hari_3
+  description: "Sistem penundaan waktu menyala (TON - On Delay Timer) 5 detik: Saat TOGGLE_BUTTON_1 diaktifkan, TIMER_1 mulai menghitung hingga 5000 ms (5 detik). Setelah 5 detik berlalu, bit TIMER_1.DN bernilai TRUE dan menyalakan LAMPU_1."
+  tags:
+    input:
+      - name: TOGGLE_BUTTON_1
+        dataType: BOOL
+    output:
+      - name: LAMPU_1
+        dataType: BOOL
+    local:
+      - name: TIMER_1
+        dataType: TIMER
+        defaultValue:
+          PRE: 5000
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(TOGGLE_BUTTON_1)TON(TIMER_1,5000,0);
+        XIC(TIMER_1.DN)OTE(LAMPU_1);

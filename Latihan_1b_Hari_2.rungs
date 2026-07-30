@@ -1,0 +1,19 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_1b_Hari_2
+  description: "Sistem konversi suhu Celcius ke Reamur berbasis perkalian (MUL): Menghitung nilai Reamur dengan mengalikan nilai CELCIUS dengan faktor pengali GAIN (0.8), dimana Reamur = Celcius * 0.8."
+  tags:
+    local:
+      - name: CELCIUS
+        dataType: REAL
+        defaultValue: 10
+      - name: GAIN
+        dataType: REAL
+        defaultValue: 0.8
+      - name: REAMUR
+        dataType: REAL
+  routines:
+    Logic:
+      type: ld
+      content: MUL(CELCIUS,GAIN,REAMUR);

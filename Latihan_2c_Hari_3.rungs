@@ -1,0 +1,30 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_2c_Hari_3
+  description: "Sistem pengasutan motor induksi 3-fase Star-Delta otomatis dengan pengunci (latching) dan interlock keselamatan: Tekan START_BUTTON mengaktifkan Kontaktor Utama K1_MAIN dan Kontaktor Star K2_STAR selama 5 detik pertama. Setelah 5 detik, timer memutus K2_STAR dan mengaktifkan Kontaktor Delta K3_DELTA untuk running normal. Dilengkapi interlock elektrik silang antara STAR dan DELTA serta STOP_BUTTON untuk penghentian darurat."
+  tags:
+    input:
+      - name: START_BUTTON
+        dataType: BOOL
+      - name: STOP_BUTTON
+        dataType: BOOL
+    output:
+      - name: K1_MAIN
+        dataType: BOOL
+      - name: K2_STAR
+        dataType: BOOL
+      - name: K3_DELTA
+        dataType: BOOL
+    local:
+      - name: TIMER_STAR_DELTA
+        dataType: TIMER
+        defaultValue:
+          PRE: 5000
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        [XIC(START_BUTTON),XIC(K1_MAIN)]XIO(STOP_BUTTON)OTE(K1_MAIN)TON(TIMER_STAR_DELTA,5000,0);
+        XIC(K1_MAIN)XIO(TIMER_STAR_DELTA.DN)XIO(K3_DELTA)OTE(K2_STAR);
+        XIC(K1_MAIN)XIC(TIMER_STAR_DELTA.DN)XIO(K2_STAR)OTE(K3_DELTA);

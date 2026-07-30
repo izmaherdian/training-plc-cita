@@ -1,0 +1,16 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_1_Hari_1
+  description: "Sistem kontrol lampu sederhana berbasis 1 Rung: Memeriksa kondisi Normally Open dari BUTTON (XIC). Saat BUTTON ditekan (TRUE), output LAMPU diaktifkan (OTE=TRUE). Saat BUTTON dilepas (FALSE), LAMPU padam."
+  tags:
+    input:
+      - name: BUTTON
+        dataType: BOOL
+    output:
+      - name: LAMPU
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: XIC(BUTTON)OTE(LAMPU);

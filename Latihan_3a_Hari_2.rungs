@@ -1,0 +1,27 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_3a_Hari_2
+  description: "Sistem deteksi bahaya bertingkat (Multi-stage Safety System): Level 1 (SENS_1 aktif) menyalakan SIRINE; Level 2 (SENS_1 dan SENS_2 aktif) menyalakan SIRINE dan LAMPU; Level 3 (ketiga sensor SENS_1, SENS_2, SENS_3 aktif secara simultan) mengaktifkan seluruh indikator beserta pemadam SPRINKLER."
+  tags:
+    input:
+      - name: SENS_1
+        dataType: BOOL
+      - name: SENS_2
+        dataType: BOOL
+      - name: SENS_3
+        dataType: BOOL
+    output:
+      - name: SIRINE
+        dataType: BOOL
+      - name: LAMPU
+        dataType: BOOL
+      - name: SPRINKLER
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(SENS_1)OTE(SIRINE);
+        XIC(SENS_1)XIC(SENS_2)OTE(LAMPU);
+        XIC(SENS_1)XIC(SENS_2)XIC(SENS_3)OTE(SPRINKLER);

@@ -1,0 +1,40 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_2b_Hari_3
+  description: "Sistem sekuensial pencampuran zat kimia berdasarkan sensor perbedaan tekanan (DP) dan timer: Jika DP_A < 5V, VALVE_A membuka. Jika DP_A >= 5V dan DP_B < 5V, VALVE_B membuka. Jika kedua DP >= 5V, TIMER_1 berjalan selama 5 detik, kemudian VALVE_C membuka selama 5 detik (kontrol via TIMER_2), lalu sistem mati otomatis setelah pencampuran selesai."
+  tags:
+    output:
+      - name: VALVE_A
+        dataType: BOOL
+      - name: VALVE_B
+        dataType: BOOL
+      - name: VALVE_C
+        dataType: BOOL
+    local:
+      - name: DP_A
+        dataType: REAL
+        defaultValue: 5
+      - name: DP_B
+        dataType: REAL
+        defaultValue: 5
+      - name: LIMIT_5
+        dataType: REAL
+        defaultValue: 5
+      - name: TIMER_1
+        dataType: TIMER
+        defaultValue:
+          PRE: 5000
+      - name: TIMER_2
+        dataType: TIMER
+        defaultValue:
+          PRE: 5000
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        LT(DP_A,LIMIT_5)OTE(VALVE_A);
+        GE(DP_A,LIMIT_5)LT(DP_B,LIMIT_5)OTE(VALVE_B);
+        GE(DP_A,LIMIT_5)GE(DP_B,LIMIT_5)TON(TIMER_1,5000,0);
+        XIC(TIMER_1.DN)TON(TIMER_2,5000,0);
+        XIC(TIMER_1.DN)XIO(TIMER_2.DN)OTE(VALVE_C);

@@ -1,0 +1,47 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_1b_Hari_3
+  description: "Sistem penskalaan tegangan potensiometer dan pengondisian alarm bertingkat: Tegangan input V_IN ditambah 0.1 lalu dikali 0.65 menghasilkan V_OUT. LAMPU_1 menyala jika 2.0 <= V_OUT < 6.0; LAMPU_2 menyala jika 4.0 <= V_OUT < 6.0; LAMPU_3 menyala jika 5.0 <= V_OUT < 6.0. Seluruh lampu padam jika V_OUT >= 6.0."
+  tags:
+    local:
+      - name: V_IN
+        dataType: REAL
+        defaultValue: 5.0
+      - name: ADD_VAL
+        dataType: REAL
+        defaultValue: 0.1
+      - name: V_TEMP
+        dataType: REAL
+      - name: MULT_VAL
+        dataType: REAL
+        defaultValue: 0.65
+      - name: V_OUT
+        dataType: REAL
+      - name: LIMIT_2
+        dataType: REAL
+        defaultValue: 2.0
+      - name: LIMIT_4
+        dataType: REAL
+        defaultValue: 4.0
+      - name: LIMIT_5
+        dataType: REAL
+        defaultValue: 5.0
+      - name: LIMIT_6
+        dataType: REAL
+        defaultValue: 6.0
+    output:
+      - name: LAMPU_1
+        dataType: BOOL
+      - name: LAMPU_2
+        dataType: BOOL
+      - name: LAMPU_3
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        ADD(V_IN,ADD_VAL,V_TEMP)MUL(V_TEMP,MULT_VAL,V_OUT);
+        GE(V_OUT,LIMIT_2)LT(V_OUT,LIMIT_6)OTE(LAMPU_1);
+        GE(V_OUT,LIMIT_4)LT(V_OUT,LIMIT_6)OTE(LAMPU_2);
+        GE(V_OUT,LIMIT_5)LT(V_OUT,LIMIT_6)OTE(LAMPU_3);

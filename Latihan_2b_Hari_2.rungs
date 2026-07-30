@@ -1,0 +1,26 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_2b_Hari_2
+  description: "Sistem perhitungan matematis teorema Pythagoras (Sisi Miring / Hipotenusa): Menghitung AA = A^2 (3^2=9), BB = B^2 (4^2=16), menjumlahkannya menjadi C = AA + BB (9+16=25), dan menghitung akar kuadrat SQRT(C) untuk menghasilkan HASIL = 5."
+  tags:
+    local:
+      - name: A
+        dataType: REAL
+        defaultValue: 3
+      - name: B
+        dataType: REAL
+        defaultValue: 4
+      - name: C
+        dataType: REAL
+        defaultValue: 21
+      - name: AA
+        dataType: REAL
+      - name: BB
+        dataType: REAL
+      - name: HASIL
+        dataType: REAL
+  routines:
+    Logic:
+      type: ld
+      content: MUL(A,A,AA)MUL(B,B,BB)ADD(AA,BB,C)SQRT(C,HASIL);

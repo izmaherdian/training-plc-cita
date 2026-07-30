@@ -1,0 +1,26 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_2a_Hari_3
+  description: "Sistem akumulasi waktu dengan Retentive Timer (RTO) 10 detik dan Reset manual: Saat TOGGLE_BUTTON_1 aktif, RTO menyimpan akumulasi waktu (ACC). Jika tombol di-unpress dan ditekan kembali, akumulasi waktu berlanjut hingga 10 detik (10000 ms) untuk menyalakan LAMPU_1. TOGGLE_BUTTON_2 berfungsi mereset akumulasi waktu TIMER_1 (RES)."
+  tags:
+    input:
+      - name: TOGGLE_BUTTON_1
+        dataType: BOOL
+      - name: TOGGLE_BUTTON_2
+        dataType: BOOL
+    output:
+      - name: LAMPU_1
+        dataType: BOOL
+    local:
+      - name: TIMER_1
+        dataType: TIMER
+        defaultValue:
+          PRE: 10000
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(TOGGLE_BUTTON_1)RTO(TIMER_1,10000,0);
+        XIC(TIMER_1.DN)OTE(LAMPU_1);
+        XIC(TOGGLE_BUTTON_2)RES(TIMER_1);

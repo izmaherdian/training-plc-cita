@@ -1,0 +1,32 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_1a_Hari_2
+  description: "Sistem pemetaan sakelar ke lampu 4-channel secara terpisah: Masing-masing sakelar (SW_0 s.d. SW_3) secara independen mengontrol lampu yang berkesesuaian (Lamp_0 s.d. Lamp_3) secara langsung menggunakan instruksi XIC dan OTE."
+  tags:
+    input:
+      - name: SW_0
+        dataType: BOOL
+      - name: SW_1
+        dataType: BOOL
+      - name: SW_2
+        dataType: BOOL
+      - name: SW_3
+        dataType: BOOL
+    output:
+      - name: Lamp_0
+        dataType: BOOL
+      - name: Lamp_1
+        dataType: BOOL
+      - name: Lamp_2
+        dataType: BOOL
+      - name: Lamp_3
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(SW_0)OTE(Lamp_0);
+        XIC(SW_1)OTE(Lamp_1);
+        XIC(SW_2)OTE(Lamp_2);
+        XIC(SW_3)OTE(Lamp_3);

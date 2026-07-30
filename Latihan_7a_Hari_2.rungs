@@ -1,0 +1,33 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_7a_Hari_2
+  description: "Sistem manajemen akses pintu gerbang masuk/keluar otomatis dengan E-Stop dan Alarm Kendala: PALANG_MASUK terbuka jika kendaraan terdeteksi oleh SENS_1, SENS_2 (rintangan) bebas, dan sakelar STOP tidak aktif. PALANG_KELUAR terbuka saat SENS_3 mendeteksi kendaraan keluar (tanpa STOP). Jika SENS_2 mendeteksi rintangan/bahaya, LAMPU_MERAH dan ALARM akan aktif bersamaan untuk memberi peringatan."
+  tags:
+    input:
+      - name: SENS_1
+        dataType: BOOL
+      - name: SENS_2
+        dataType: BOOL
+      - name: SENS_3
+        dataType: BOOL
+      - name: STOP
+        dataType: BOOL
+    output:
+      - name: PALANG_MASUK
+        dataType: BOOL
+      - name: LAMPU_MERAH
+        dataType: BOOL
+      - name: LAMPU_HIJAU
+        dataType: BOOL
+      - name: PALANG_KELUAR
+        dataType: BOOL
+      - name: ALARM
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(SENS_1)XIO(SENS_2)XIO(STOP)OTE(PALANG_MASUK);
+        XIC(SENS_3)XIO(STOP)OTE(PALANG_KELUAR);
+        XIC(SENS_2)XIO(STOP)OTE(LAMPU_MERAH)OTE(ALARM);

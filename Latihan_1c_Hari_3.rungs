@@ -1,0 +1,26 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_1c_Hari_3
+  description: "Sistem penghitung kapasitas parkir otomatis berbasis Counter Up/Down (CTU/CTD): SENSOR_MASUK menambah akumulasi jumlah kendaraan (CTU), SENSOR_KELUAR menguranginya (CTD). Ketika jumlah kendaraan mencapai kapasitas maksimum (PRE=10), bit PARKING_COUNTER.DN bernilai TRUE dan menyalakan LAMPU_PENUH."
+  tags:
+    input:
+      - name: SENSOR_MASUK
+        dataType: BOOL
+      - name: SENSOR_KELUAR
+        dataType: BOOL
+    output:
+      - name: LAMPU_PENUH
+        dataType: BOOL
+    local:
+      - name: PARKING_COUNTER
+        dataType: COUNTER
+        defaultValue:
+          PRE: 10
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(SENSOR_MASUK)CTU(PARKING_COUNTER,10,0);
+        XIC(SENSOR_KELUAR)CTD(PARKING_COUNTER,10,0);
+        XIC(PARKING_COUNTER.DN)OTE(LAMPU_PENUH);

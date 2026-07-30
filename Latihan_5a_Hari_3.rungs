@@ -1,0 +1,29 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_5a_Hari_3
+  description: "Sistem kontrol lampu berbasis komparasi akumulasi counter (LT Comparison): START_PUSH_BUTTON menambah nilai akumulasi COUNTER_1 (maksimum preset 10). Selama nilai akumulasi hitungan (COUNTER_1.ACC) kurang dari 5 (LT ACC, 5), START_LAMP tetap menyala. Ketika hitungan mencapai 5 atau lebih, START_LAMP padam. STOP_PUSH_BUTTON mereset counter ke 0 sehingga lampu menyala kembali."
+  tags:
+    input:
+      - name: START_PUSH_BUTTON
+        dataType: BOOL
+      - name: STOP_PUSH_BUTTON
+        dataType: BOOL
+    output:
+      - name: START_LAMP
+        dataType: BOOL
+    local:
+      - name: COUNTER_1
+        dataType: COUNTER
+        defaultValue:
+          PRE: 10
+      - name: LIMIT_5
+        dataType: DINT
+        defaultValue: 5
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(START_PUSH_BUTTON)CTU(COUNTER_1,10,0);
+        LT(COUNTER_1.ACC,LIMIT_5)OTE(START_LAMP);
+        XIC(STOP_PUSH_BUTTON)RES(COUNTER_1);

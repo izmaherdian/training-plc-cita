@@ -1,0 +1,31 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_2a_Hari_2
+  description: "Sistem kontrol lampu dengan Master Interlock / Emergency Stop (SW_3): SW_0 menyalakan Lamp_0 dan Lamp_1 secara bersamaan; SW_1 menyalakan Lamp_2; SW_2 menyalakan Lamp_3. Jika SW_3 aktif (XIO(SW_3)=FALSE), seluruh jalur terputus sehingga semua lampu langsung padam."
+  tags:
+    input:
+      - name: SW_0
+        dataType: BOOL
+      - name: SW_1
+        dataType: BOOL
+      - name: SW_2
+        dataType: BOOL
+      - name: SW_3
+        dataType: BOOL
+    output:
+      - name: Lamp_0
+        dataType: BOOL
+      - name: Lamp_1
+        dataType: BOOL
+      - name: Lamp_2
+        dataType: BOOL
+      - name: Lamp_3
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(SW_0)XIO(SW_3)OTE(Lamp_0)OTE(Lamp_1);
+        XIC(SW_1)XIO(SW_3)OTE(Lamp_2);
+        XIC(SW_2)XIO(SW_3)OTE(Lamp_3);

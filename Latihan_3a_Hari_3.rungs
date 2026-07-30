@@ -1,0 +1,26 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_3a_Hari_3
+  description: "Sistem aktivasi lampu setelah pencapaian 5 kali ketukan tombol (CTU Counter): Setiap penekanan START_PUSH_BUTTON menambah nilai akumulasi COUNTER_1. Setelah ditekan sebanyak 5 kali (ACC=5), bit COUNTER_1.DN aktif dan menyalakan START_LAMP. Penekanan STOP_PUSH_BUTTON akan mereset hitungan counter (RES) dan memadamkan lampu."
+  tags:
+    input:
+      - name: START_PUSH_BUTTON
+        dataType: BOOL
+      - name: STOP_PUSH_BUTTON
+        dataType: BOOL
+    output:
+      - name: START_LAMP
+        dataType: BOOL
+    local:
+      - name: COUNTER_1
+        dataType: COUNTER
+        defaultValue:
+          PRE: 5
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(START_PUSH_BUTTON)CTU(COUNTER_1,5,0);
+        XIC(COUNTER_1.DN)OTE(START_LAMP);
+        XIC(STOP_PUSH_BUTTON)RES(COUNTER_1);

@@ -1,0 +1,26 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_6a_Hari_2
+  description: "Sistem kontrol palang pintu dan indikator lalu lintas sederhana: SENS_1 mendeteksi kedatangan kendaraan, memicu PALANG terangkat dan menyalakan LAMPU_HIJAU dengan syarat SENS_2 (sensor area bahaya/rintangan) tidak terdeteksi. Jika SENS_2 aktif, PALANG tidak terangkat dan LAMPU_MERAH menyala."
+  tags:
+    input:
+      - name: SENS_1
+        dataType: BOOL
+      - name: SENS_2
+        dataType: BOOL
+      - name: SENS_3
+        dataType: BOOL
+    output:
+      - name: PALANG
+        dataType: BOOL
+      - name: LAMPU_MERAH
+        dataType: BOOL
+      - name: LAMPU_HIJAU
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        XIC(SENS_1)XIO(SENS_2)OTE(PALANG)OTE(LAMPU_HIJAU);
+        XIC(SENS_2)OTE(LAMPU_MERAH);

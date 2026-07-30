@@ -1,0 +1,52 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_3c_Hari_3
+  description: "Sistem otomatisasi proses pencampuran bahan cair dalam tangki (Batch Mixing System) berulang (looping): Dimulai dengan latching RUN. Tahap 1: POMPA_1 mengalirkan cairan selama 5 detik (TIMER_1). Tahap 2: POMPA_2 menambahkan aditif selama 5 detik (TIMER_2). Tahap 3: MOTOR_MIXER mengaduk campuran selama 7 detik (TIMER_3). Tahap 4: POMPA_3 menguras tangki selama 10 detik (TIMER_4). Setelah TIMER_4 selesai, siklus mengulang dari awal secara kontinu hingga STOP_BUTTON ditekan."
+  tags:
+    input:
+      - name: START_BUTTON
+        dataType: BOOL
+      - name: STOP_BUTTON
+        dataType: BOOL
+    output:
+      - name: POMPA_1
+        dataType: BOOL
+      - name: POMPA_2
+        dataType: BOOL
+      - name: MOTOR_MIXER
+        dataType: BOOL
+      - name: POMPA_3
+        dataType: BOOL
+    local:
+      - name: RUN
+        dataType: BOOL
+      - name: TIMER_1
+        dataType: TIMER
+        defaultValue:
+          PRE: 5000
+      - name: TIMER_2
+        dataType: TIMER
+        defaultValue:
+          PRE: 5000
+      - name: TIMER_3
+        dataType: TIMER
+        defaultValue:
+          PRE: 7000
+      - name: TIMER_4
+        dataType: TIMER
+        defaultValue:
+          PRE: 10000
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        [XIC(START_BUTTON),XIC(RUN)]XIO(STOP_BUTTON)OTE(RUN);
+        XIC(RUN)XIO(TIMER_4.DN)TON(TIMER_1,5000,0);
+        XIC(TIMER_1.DN)TON(TIMER_2,5000,0);
+        XIC(TIMER_2.DN)TON(TIMER_3,7000,0);
+        XIC(TIMER_3.DN)TON(TIMER_4,10000,0);
+        XIC(RUN)XIO(TIMER_1.DN)OTE(POMPA_1);
+        XIC(TIMER_1.DN)XIO(TIMER_2.DN)OTE(POMPA_2);
+        XIC(TIMER_2.DN)XIO(TIMER_3.DN)OTE(MOTOR_MIXER);
+        XIC(TIMER_3.DN)XIO(TIMER_4.DN)OTE(POMPA_3);

@@ -1,0 +1,42 @@
+version: 4
+origin: studio
+aoi:
+  name: Latihan_3b_Hari_3
+  description: "Sistem indikator alarm analog multi-level dengan fungsi Trip/Reset Atas (7V): Menganalisis tegangan V_IN. LAMPU_4 (LL) aktif jika V_IN >= 2V; LAMPU_3 (L) aktif jika V_IN >= 3V; LAMPU_2 (H) aktif jika V_IN >= 5V; LAMPU_1 (HH) aktif jika V_IN >= 6V. Seluruh lampu alarm otomatis padam (Reset/Shutdown) apabila tegangan menyentuh atau melebihi 7V."
+  tags:
+    local:
+      - name: V_IN
+        dataType: REAL
+        defaultValue: 5.5
+      - name: LIMIT_6
+        dataType: REAL
+        defaultValue: 6.0
+      - name: LIMIT_5
+        dataType: REAL
+        defaultValue: 5.0
+      - name: LIMIT_3
+        dataType: REAL
+        defaultValue: 3.0
+      - name: LIMIT_2
+        dataType: REAL
+        defaultValue: 2.0
+      - name: LIMIT_7
+        dataType: REAL
+        defaultValue: 7.0
+    output:
+      - name: LAMPU_1
+        dataType: BOOL
+      - name: LAMPU_2
+        dataType: BOOL
+      - name: LAMPU_3
+        dataType: BOOL
+      - name: LAMPU_4
+        dataType: BOOL
+  routines:
+    Logic:
+      type: ld
+      content: |-
+        GE(V_IN,LIMIT_6)LT(V_IN,LIMIT_7)OTE(LAMPU_1);
+        GE(V_IN,LIMIT_5)LT(V_IN,LIMIT_7)OTE(LAMPU_2);
+        GE(V_IN,LIMIT_3)LT(V_IN,LIMIT_7)OTE(LAMPU_3);
+        GE(V_IN,LIMIT_2)LT(V_IN,LIMIT_7)OTE(LAMPU_4);
